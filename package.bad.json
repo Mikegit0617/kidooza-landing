@@ -1,0 +1,12 @@
+{
+  "name": "kidooza-landing",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "nodemailer": "^6.9.0"
+  },
+  "scripts": {
+    "dev": "echo \"Use 'vercel dev -l 3002' to run locally.\" && exit 0",
+    "build": "echo \"No build step\""
+  }
+}

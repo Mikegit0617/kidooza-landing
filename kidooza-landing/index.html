@@ -168,46 +168,48 @@
     setLocale(localStorage.getItem('kidooza_locale') || 'en');
 
     // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    // --- Email capture ---
-    // Option A: no-backend demo (stores locally + shows message)
-    // Replace with Option B for Supabase (see below)
-    document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const result = document.getElementById('result');
-      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
-        result.textContent = 'Please enter a valid email.';
-        result.className = 'mt-3 text-sm font-medium text-rose-600';
-        return;
-      }
+  // --- Email capture (PROD: posts to /api/waitlist) ---
+  document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      try {
-        // Option B: Supabase REST insert (uncomment and set env on your Edge Function or API)
-        // const resp = await fetch('https://YOUR_PROJECT.supabase.co/rest/v1/waitlist', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     'apikey': 'YOUR_SUPABASE_ANON_KEY',
-        //     'Authorization': 'Bearer YOUR_SUPABASE_ANON_KEY'
-        //   },
-        //   body: JSON.stringify({ email })
-        // });
-        // if(!resp.ok) throw new Error('Signup failed');
+    const emailInput = document.getElementById('email');
+    const result     = document.getElementById('result');
+    const joinBtn    = document.getElementById('t_join');
+    const email      = emailInput.value.trim();
 
-        // Demo success path
-        const list = JSON.parse(localStorage.getItem('kidooza_waitlist') || '[]');
-        list.push({ email, at: new Date().toISOString() });
-        localStorage.setItem('kidooza_waitlist', JSON.stringify(list));
-        result.textContent = 'You\'re on the list! We\'ll be in touch soon.';
-        result.className = 'mt-3 text-sm font-medium text-emerald-600';
-        (document.getElementById('email')).value = '';
-      } catch (err){
-        result.textContent = 'Something went wrong. Please try again later.';
-        result.className = 'mt-3 text-sm font-medium text-rose-600';
-      }
-    });
-  </script>
+    // basic validation
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      result.textContent = 'Please enter a valid email.';
+      result.className = 'mt-3 text-sm font-medium text-rose-600';
+      return;
+    }
+
+    joinBtn.disabled = true;
+    result.textContent = 'Submitting…';
+    result.className = 'mt-3 text-sm font-medium text-slate-600';
+
+    try {
+      const resp = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok || !data.ok) throw new Error(data.message || 'Failed to submit');
+
+      window.location.href = '/thank-you.html';
+    } catch (err) {
+      console.error(err);
+      result.textContent = 'Something went wrong. Please try again later.';
+      result.className = 'mt-3 text-sm font-medium text-rose-600';
+    } finally {
+      joinBtn.disabled = false;
+    }
+  });
+</script>
 </body>
 </html>
+  

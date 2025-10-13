@@ -1,48 +1,168 @@
 // /api/waitlist.js
-const nodemailer = require('nodemailer');
+// Works on Vercel (Serverless Function) and Next.js Pages API route.
+// Requires ENV vars in Production: GMAIL_USER, GMAIL_APP_PASSWORD
 
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ ok: false, message: 'Method not allowed' });
+import nodemailer from "nodemailer";
+
+/* ------------------ Simple in-memory rate limit (per instance) ------------------ */
+// 1 request / 10s per IP, max 10 per hour per IP
+const TEN_SECONDS = 10_000;
+const ONE_HOUR = 60 * 60 * 1000;
+const lastHitByIp = new Map();   // ip -> last timestamp
+const hourHitsByIp = new Map();  // ip -> [timestamps in last hour]
+
+function getClientIp(req) {
+  // Vercel/Proxies
+  const xf = req.headers["x-forwarded-for"];
+  if (typeof xf === "string" && xf.length > 0) {
+    return xf.split(",")[0].trim();
+  }
+  return req.socket?.remoteAddress || "unknown";
+}
+
+function rateLimitOk(ip) {
+  const now = Date.now();
+
+  const last = lastHitByIp.get(ip) || 0;
+  if (now - last < TEN_SECONDS) return false;
+  lastHitByIp.set(ip, now);
+
+  const arr = hourHitsByIp.get(ip) || [];
+  const recent = arr.filter((t) => now - t < ONE_HOUR);
+  recent.push(now);
+  hourHitsByIp.set(ip, recent);
+  return recent.length <= 10;
+}
+
+/* ----------------------------- CORS + helpers ----------------------------- */
+function setCors(res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+}
+
+function send(res, status, payload) {
+  setCors(res);
+  res.setHeader("Content-Type", "application/json");
+  res.status(status).json(payload);
+}
+
+/* ------------------------- Mail transporter (Gmail) ------------------------ */
+// Support both naming conventions: GMAIL_* and SMTP_*
+const user = process.env.GMAIL_USER || process.env.SMTP_USER;
+const pass = process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASS;
+let transporter = null;
+if (user && pass) {
+  transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: { user, pass },
+  });
+} else {
+  // Log once at cold start so you can see it in Vercel logs
+  console.error("ENV_MISSING", {
+    has_GMAIL_USER: !!user,
+    has_GMAIL_APP_PASSWORD: !!pass,
+  });
+}
+
+/* ------------------------------ Main handler ------------------------------ */
+export default async function handler(req, res) {
+  setCors(res);
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  if (req.method !== "POST") {
+    return send(res, 405, { ok: false, message: "Method not allowed" });
   }
 
   try {
-    const { email } = req.body || {};
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return res.status(400).json({ ok: false, message: 'Valid email is required' });
+    if (!transporter) {
+      // Mirrors the Gmail library error you saw to make it obvious
+      return send(res, 500, { ok: false, message: 'Missing credentials for "LOGIN"' });
     }
 
-    // 🔹 These two lines MUST exist and match your Vercel env var names:
-    const user = process.env.GMAIL_USER;          // <-- should be "hello@kidooza.ai"
-    const pass = process.env.GMAIL_APP_PASSWORD;  // <-- your 16-char app password
+    // Parse body (Next.js automatically parses JSON; plain Vercel needs it sent as JSON)
+    const { email, hp } = req.body || {};
 
-    // Outlook / Microsoft 365 SMTP
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.office365.com',
-      port: 587,
-      secure: false,           // STARTTLS on port 587
-      auth: { user, pass },    // 🔹 uses the env vars above
-      requireTLS: true,
-      tls: { rejectUnauthorized: true }
-    });
+    // Honeypot (bots will often fill this hidden field)
+    if (typeof hp === "string" && hp.trim() !== "") {
+      return send(res, 200, { ok: true, message: "Thanks!" });
+    }
 
-    // Optional: verifies the SMTP connection/creds
-    await transporter.verify();
+    // Basic email validation
+    const emailStr = String(email || "").trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
+    if (!emailOk) {
+      return send(res, 400, { ok: false, message: "Please enter a valid email." });
+    }
+
+    // Rate limit
+    const ip = getClientIp(req);
+    if (!rateLimitOk(ip)) {
+      return send(res, 429, { ok: false, message: "Too many requests. Try again later." });
+    }
+
+    // Compose email to your inbox (you can also write to DB here if you like)
+    const html = `
+      <div style="font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5">
+        <h2>New Waitlist Signup</h2>
+        <p><strong>Email:</strong> ${escapeHtml(emailStr)}</p>
+        <p><small>IP: ${escapeHtml(ip)}</small></p>
+        <hr />
+        <p>KIDOOZA – Smarter Learning Powered by AI</p>
+      </div>
+    `;
 
     const info = await transporter.sendMail({
-      from: `"Kidooza Waitlist" <${user}>`,  // 🔹 from must match the authenticated user
-      to: 'hello@kidooza.ai',
-      replyTo: email,
-      subject: 'New Waitlist Signup',
-      text: `New signup: ${email}`,
-      html: `<p><strong>New signup:</strong> ${email}</p>`,
+      from: `KIDOOZA <${user}>`,
+      to: user,                  // send to your inbox
+      replyTo: emailStr,         // so you can reply directly
+      subject: `KIDOOZA waitlist: ${emailStr}`,
+      text: `New waitlist signup: ${emailStr} (IP: ${ip})`,
+      html,
     });
 
-    console.log('Mail sent:', info?.messageId || info);
-    return res.status(200).json({ ok: true, message: 'Email sent' });
+    // Optional: send a lightweight confirmation to the user
+    // (Uncomment if you want to send confirmations)
+    // await transporter.sendMail({
+    //   from: `KIDOOZA <${user}>`,
+    //   to: emailStr,
+    //   subject: "You're on the KIDOOZA waitlist 🎉",
+    //   text: "Thanks for joining our waitlist! We'll be in touch soon.",
+    // });
+
+    console.log("MAIL_OK", { messageId: info?.messageId });
+
+    return send(res, 200, { ok: true, message: "Email sent successfully!" });
   } catch (err) {
-    console.error('Email error:', err);
-    return res.status(500).json({ ok: false, message: String(err?.message || err) });
+    console.error("MAIL_ERROR", safeError(err));
+    // Normalize common SMTP errors so they’re easy to read in the client console
+    const msg =
+      err?.response?.includes("Invalid login") ? "Invalid SMTP login" :
+      err?.code === "EAUTH" ? "SMTP authentication failed" :
+      "Internal Server Error";
+    return send(res, 500, { ok: false, message: msg });
   }
-};
+}
+
+/* --------------------------------- Utils --------------------------------- */
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function safeError(e) {
+  return {
+    name: e?.name,
+    code: e?.code,
+    message: e?.message,
+    response: e?.response,
+    stack: e?.stack?.split("\n").slice(0, 3).join("\n"),
+  };
+}
