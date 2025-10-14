@@ -48,9 +48,9 @@ function send(res, status, payload) {
 }
 
 /* ------------------------- Mail transporter (Gmail) ------------------------ */
-// Support both naming conventions: GMAIL_* and SMTP_*
-const user = process.env.GMAIL_USER || process.env.SMTP_USER;
-const pass = process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASS;
+const user = process.env.GMAIL_USER;
+const pass = process.env.GMAIL_APP_PASSWORD;
+
 let transporter = null;
 if (user && pass) {
   transporter = nodemailer.createTransport({
