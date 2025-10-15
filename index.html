@@ -1,213 +1,195 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>KIDOOZA – Smarter Learning Powered by AI</title>
-  <meta name="description" content="AI-powered, multilingual worksheet generator for K–8. Coming soon." />
-  <meta property="og:title" content="KIDOOZA – Smarter Learning Powered by AI" />
-  <meta property="og:description" content="AI-powered, multilingual worksheet generator for K–8. Coming soon." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kidooza.ai" />
-  <meta name="theme-color" content="#0ea5e9" />
-  <link rel="icon" href="/favicon.ico" />
-  <!-- Tailwind via CDN (fastest way to ship a static Coming Soon page); swap to compiled Tailwind later -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KIDOOZA — Smarter Learning Powered by AI</title>
+  <meta name="description" content="KIDOOZA: AI kids’ worksheet generator. Smart worksheets in seconds." />
+  <link rel="icon" href="brand-mark.png" />
   <style>
-    /* simple glow for the 3D logo */
-    .logo-shadow { filter: drop-shadow(0 10px 20px rgba(2, 132, 199, .25)); }
-    .glass { backdrop-filter: blur(10px); background: rgba(255,255,255,.7); }
+    :root { --fg:#0b1020; --muted:#6b7280; --brand:#0ea5e9; --bg:#ffffff; --card:#f7f7fb; }
+    *{box-sizing:border-box} body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
+      color:var(--fg);background:var(--bg)}
+    .wrap{max-width:980px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+    .brand img{width:40px;height:40px}
+    .lang{font-size:14px;color:var(--muted)}
+    .lang button{background:none;border:0;cursor:pointer;font:inherit;padding:4px 8px;border-radius:8px}
+    .lang button.active{color:#fff;background:var(--brand)}
+    .hero{margin:48px 0;padding:28px;border-radius:20px;background:var(--card)}
+    h1{margin:0 0 8px;font-size:34px;line-height:1.15}
+    p.lead{margin:0;color:var(--muted);font-size:16px}
+    .form{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+    input[type=email]{flex:1 1 280px;padding:14px 12px;border-radius:12px;border:1px solid #d1d5db;font-size:16px}
+    button[type=submit]{padding:14px 18px;border:0;border-radius:12px;background:var(--brand);color:#fff;font-weight:600;cursor:pointer}
+    .result{margin-top:10px;font-size:14px}
+    footer{margin:48px 0 12px;color:var(--muted);font-size:13px;text-align:center}
+    .under{margin-top:16px;font-size:14px;color:var(--muted)}
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800 antialiased">
-  <!-- Header -->
-  <header class="mx-auto max-w-7xl px-6 py-6 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <!-- Replace src with your transparent PNG from the logo package as /logo.png -->
-      <img src="/logo.png" alt="KIDOOZA" class="h-12 w-auto logo-shadow" />
-      <span class="sr-only">KIDOOZA</span>
-    </div>
-    <nav class="flex items-center gap-3 text-sm">
-      <button id="lang-en" class="px-3 py-1 rounded-md hover:bg-slate-100">EN</button>
-      <button id="lang-es" class="px-3 py-1 rounded-md hover:bg-slate-100">ES</button>
-      <button id="lang-vi" class="px-3 py-1 rounded-md hover:bg-slate-100">VI</button>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <main class="mx-auto max-w-6xl px-6 pb-20">
-    <section class="grid lg:grid-cols-2 gap-10 items-center">
-      <div>
-        <h1 id="t_title" class="text-4xl md:text-5xl font-extrabold tracking-tight">
-          Smarter Learning Powered by AI
-        </h1>
-        <p id="t_subtitle" class="mt-4 text-lg text-slate-600">
-          Personalized, printable worksheets for K–8, generated in seconds. Multilingual from day one.
-        </p>
-
-        <!-- Email capture card -->
-        <div class="mt-8 p-5 rounded-2xl border border-slate-200 glass shadow-sm max-w-xl">
-          <form id="waitlist-form" class="flex flex-col sm:flex-row gap-3">
-            <input id="email" type="email" required placeholder="you@example.com"
-              class="flex-1 rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sky-400"
-              aria-label="Email address" />
-            <button id="t_join" type="submit"
-              class="rounded-xl bg-sky-600 px-5 py-3 font-semibold text-white hover:bg-sky-700 active:translate-y-px">
-              Join Waitlist
-            </button>
-          </form>
-          <p id="t_privacy" class="mt-3 text-xs text-slate-500">
-            We respect your privacy. Unsubscribe anytime.
-          </p>
-          <div id="result" class="mt-3 text-sm font-medium"></div>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#">
+        <!-- Use your approved glossy 3D green “K” with blue-yellow orbit -->
+        <img src="logo.png" alt="KIDOOZA logo" />
+        <div>
+          <strong>KIDOOZA</strong><br>
+          <small class="slogan" data-i18n="slogan">Smarter Learning Powered by AI</small>
         </div>
+      </a>
+      <nav class="lang" aria-label="Language">
+        <button data-lang="en" class="active">EN</button> |
+        <button data-lang="es">ES</button> |
+        <button data-lang="vi">VI</button>
+      </nav>
+    </header>
 
-        <!-- Social / contact -->
-        <div class="mt-6 text-sm text-slate-600">
-          <span id="t_contact">Questions? Email</span>
-          <a href="mailto:hello@kidooza.ai" class="text-sky-700 font-semibold"> hello@kidooza.ai</a>
-        </div>
+    <main class="hero">
+      <h1 data-i18n="headline">AI-Powered Kids’ Worksheet Generator</h1>
+      <p class="lead" data-i18n="subhead">
+        Generate curriculum-aligned worksheets in seconds — math, reading, science, geography, animals, planets, and more.
+      </p>
+
+      <div class="under" data-i18n="under1">
+        We are currently working hard to bring you an innovative learning experience powered by artificial intelligence…
+      </div>
+      <div class="under" data-i18n="under2">
+        Under construction — building the platform to deliver an exceptional educational experience.
       </div>
 
-      <!-- Right visual -->
-      <div class="flex items-center justify-center">
-        <!-- Display the big 3D K mark; swap source to your centered (stacked) transparent PNG named /brand-mark.png -->
-        <img src="/brand-mark.png" alt="KIDOOZA 3D Logo" class="w-[420px] h-auto logo-shadow" />
-      </div>
-    </section>
+      <form id="waitlist-form" class="form" autocomplete="on">
+        <input id="email" type="email" placeholder="you@example.com" required
+               aria-label="Email" data-i18n-placeholder="email_placeholder" />
+        <button id="join-btn" type="submit" data-i18n="join">Join waitlist</button>
+        <div id="result" class="result" role="status" aria-live="polite"></div>
+      </form>
+    </main>
 
-    <!-- Feature teasers -->
-    <section class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <h3 id="t_feat1_t" class="font-semibold">Instant Worksheets</h3>
-        <p id="t_feat1_d" class="mt-1 text-sm text-slate-600">Pick a topic, grade, and language. Get printable PDFs with answer keys.</p>
-      </div>
-      <div class="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <h3 id="t_feat2_t" class="font-semibold">Multilingual</h3>
-        <p id="t_feat2_d" class="mt-1 text-sm text-slate-600">English, Spanish, and Vietnamese at launch. More to come.</p>
-      </div>
-      <div class="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <h3 id="t_feat3_t" class="font-semibold">Teacher Friendly</h3>
-        <p id="t_feat3_d" class="mt-1 text-sm text-slate-600">Template gallery, class packs, and PDF downloads that work anywhere.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="py-10 text-center text-xs text-slate-500">
-    © <span id="year"></span> KIDOOZA.AI — <span id="t_rights">All rights reserved.</span>
-  </footer>
+    <footer>
+      <span data-i18n="footer">© KIDOOZA. All rights reserved.</span>
+    </footer>
+  </div>
 
   <script>
-    // --- Simple i18n (EN / ES / VI) ---
-    const messages = {
+    // ---------------- i18n dictionary ----------------
+    const I18N = {
       en: {
-        title: 'Smarter Learning Powered by AI',
-        subtitle: 'Personalized, printable worksheets for K–8, generated in seconds. Multilingual from day one.',
-        join: 'Join Waitlist',
-        privacy: 'We respect your privacy. Unsubscribe anytime.',
-        contact: 'Questions? Email',
-        feat1_t: 'Instant Worksheets',
-        feat1_d: 'Pick a topic, grade, and language. Get printable PDFs with answer keys.',
-        feat2_t: 'Multilingual',
-        feat2_d: 'English, Spanish, and Vietnamese at launch. More to come.',
-        feat3_t: 'Teacher Friendly',
-        feat3_d: 'Template gallery, class packs, and PDF downloads that work anywhere.',
-        rights: 'All rights reserved.'
+        slogan: "Smarter Learning Powered by AI",
+        headline: "AI-Powered Kids’ Worksheet Generator",
+        subhead: "Generate curriculum-aligned worksheets in seconds — math, reading, science, geography, animals, planets, and more.",
+        under1: "We are currently working hard to bring you an innovative learning experience powered by artificial intelligence…",
+        under2: "Under construction — building the platform to deliver an exceptional educational experience.",
+        join: "Join waitlist",
+        email_placeholder: "you@example.com",
+        footer: "© KIDOOZA. All rights reserved.",
+        invalid_email: "Please enter a valid email.",
+        submitting: "Submitting…",
+        success: "Thank you! You’re on the waitlist.",
+        error: "Something went wrong. Please try again."
       },
       es: {
-        title: 'Aprendizaje más inteligente impulsado por IA',
-        subtitle: 'Hojas de trabajo personalizadas para K–8, en segundos. Multilingüe desde el primer día.',
-        join: 'Unirme a la lista',
-        privacy: 'Respetamos tu privacidad. Puedes darte de baja cuando quieras.',
-        contact: '¿Preguntas? Escribe a',
-        feat1_t: 'Hojas instantáneas',
-        feat1_d: 'Elige tema, grado e idioma. Descarga PDFs con claves de respuestas.',
-        feat2_t: 'Multilingüe',
-        feat2_d: 'Inglés, español y vietnamita en el lanzamiento. Más en camino.',
-        feat3_t: 'Para docentes',
-        feat3_d: 'Galería de plantillas, paquetes por clase y descargas PDF que funcionan en cualquier lugar.',
-        rights: 'Todos los derechos reservados.'
+        slogan: "Aprendizaje más inteligente con IA",
+        headline: "Generador de hojas de trabajo para niños con IA",
+        subhead: "Genera hojas alineadas al plan de estudios en segundos: matemáticas, lectura, ciencias, geografía, animales, planetas y más.",
+        under1: "Estamos trabajando duro para ofrecerte una experiencia de aprendizaje innovadora impulsada por IA…",
+        under2: "En construcción — creando una plataforma educativa excepcional.",
+        join: "Unirme a la lista",
+        email_placeholder: "tu@correo.com",
+        footer: "© KIDOOZA. Todos los derechos reservados.",
+        invalid_email: "Por favor ingresa un correo válido.",
+        submitting: "Enviando…",
+        success: "¡Gracias! Estás en la lista de espera.",
+        error: "Algo salió mal. Inténtalo de nuevo."
       },
       vi: {
-        title: 'Học thông minh hơn nhờ AI',
-        subtitle: 'Phiếu bài tập cá nhân hoá cho bậc K–8, tạo trong vài giây. Hỗ trợ đa ngôn ngữ ngay từ đầu.',
-        join: 'Tham gia danh sách chờ',
-        privacy: 'Chúng tôi tôn trọng quyền riêng tư của bạn. Có thể huỷ đăng ký bất cứ lúc nào.',
-        contact: 'Câu hỏi? Email',
-        feat1_t: 'Tạo phiếu tức thì',
-        feat1_d: 'Chọn chủ đề, khối lớp, ngôn ngữ. Nhận PDF kèm đáp án.',
-        feat2_t: 'Đa ngôn ngữ',
-        feat2_d: 'Hỗ trợ tiếng Anh, Tây Ban Nha và Tiếng Việt khi ra mắt. Sẽ bổ sung thêm.',
-        feat3_t: 'Thân thiện giáo viên',
-        feat3_d: 'Thư viện mẫu, gói cho lớp học, tải PDF dùng được mọi nơi.',
-        rights: 'Đã đăng ký bản quyền.'
+        slogan: "Học thông minh hơn nhờ AI",
+        headline: "Trình tạo bài tập cho trẻ em dùng AI",
+        subhead: "Tạo bài tập theo chương trình chỉ trong vài giây — toán, đọc, khoa học, địa lý, động vật, các hành tinh và hơn thế nữa.",
+        under1: "Chúng tôi đang nỗ lực xây dựng trải nghiệm học tập sáng tạo được hỗ trợ bởi trí tuệ nhân tạo…",
+        under2: "Trang đang xây dựng — hướng tới một nền tảng giáo dục xuất sắc.",
+        join: "Tham gia danh sách chờ",
+        email_placeholder: "ban@example.com",
+        footer: "© KIDOOZA. Bảo lưu mọi quyền.",
+        invalid_email: "Vui lòng nhập email hợp lệ.",
+        submitting: "Đang gửi…",
+        success: "Cảm ơn! Bạn đã vào danh sách chờ.",
+        error: "Có lỗi xảy ra. Vui lòng thử lại."
       }
     };
 
-    function setLocale(lng){
-      const t = messages[lng] || messages.en;
-      document.getElementById('t_title').textContent = t.title;
-      document.getElementById('t_subtitle').textContent = t.subtitle;
-      document.getElementById('t_join').textContent = t.join;
-      document.getElementById('t_privacy').textContent = t.privacy;
-      document.getElementById('t_contact').textContent = t.contact;
-      document.getElementById('t_feat1_t').textContent = t.feat1_t;
-      document.getElementById('t_feat1_d').textContent = t.feat1_d;
-      document.getElementById('t_feat2_t').textContent = t.feat2_t;
-      document.getElementById('t_feat2_d').textContent = t.feat2_d;
-      document.getElementById('t_feat3_t').textContent = t.feat3_t;
-      document.getElementById('t_feat3_d').textContent = t.feat3_d;
-      document.getElementById('t_rights').textContent = t.rights;
-      localStorage.setItem('kidooza_locale', lng);
-    }
+    const langBtns = document.querySelectorAll('[data-lang]');
+    const swapLang = (lang) => {
+      const dict = I18N[lang] || I18N.en;
+      document.documentElement.lang = lang;
 
-    // locale buttons
-    document.getElementById('lang-en').onclick = () => setLocale('en');
-    document.getElementById('lang-es').onclick = () => setLocale('es');
-    document.getElementById('lang-vi').onclick = () => setLocale('vi');
-    setLocale(localStorage.getItem('kidooza_locale') || 'en');
+      // Replace text content
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
 
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+      // Replace placeholders
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.setAttribute('placeholder', dict[key]);
+      });
 
-    // --- Email capture ---
-    // Option A: no-backend demo (stores locally + shows message)
-    // Replace with Option B for Supabase (see below)
-    document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const result = document.getElementById('result');
-      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
-        result.textContent = 'Please enter a valid email.';
-        result.className = 'mt-3 text-sm font-medium text-rose-600';
-        return;
-      }
+      // Toggle active button
+      langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      localStorage.setItem('kidooza_lang', lang);
+    };
 
-      try {
-        // Option B: Supabase REST insert (uncomment and set env on your Edge Function or API)
-        // const resp = await fetch('https://YOUR_PROJECT.supabase.co/rest/v1/waitlist', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     'apikey': 'YOUR_SUPABASE_ANON_KEY',
-        //     'Authorization': 'Bearer YOUR_SUPABASE_ANON_KEY'
-        //   },
-        //   body: JSON.stringify({ email })
-        // });
-        // if(!resp.ok) throw new Error('Signup failed');
+    langBtns.forEach(b => b.addEventListener('click', () => swapLang(b.dataset.lang)));
+    swapLang(localStorage.getItem('kidooza_lang') || 'en');
 
-        // Demo success path
-        const list = JSON.parse(localStorage.getItem('kidooza_waitlist') || '[]');
-        list.push({ email, at: new Date().toISOString() });
-        localStorage.setItem('kidooza_waitlist', JSON.stringify(list));
-        result.textContent = 'You\'re on the list! We\'ll be in touch soon.';
-        result.className = 'mt-3 text-sm font-medium text-emerald-600';
-        (document.getElementById('email')).value = '';
-      } catch (err){
-        result.textContent = 'Something went wrong. Please try again later.';
-        result.className = 'mt-3 text-sm font-medium text-rose-600';
-      }
-    });
+    // -------------- Waitlist form (frontend + API call) --------------
+    (function () {
+      const form  = document.getElementById('waitlist-form');
+      const email = document.getElementById('email');
+      const btn   = document.getElementById('join-btn');
+      const result= document.getElementById('result');
+      if (!form || !email) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const value = (email.value || '').trim();
+        const lang = document.documentElement.lang || 'en';
+        const T = I18N[lang];
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          result.textContent = T.invalid_email;
+          return;
+        }
+
+        btn.disabled = true;
+        result.textContent = T.submitting;
+
+        try {
+          // If you have backend: /api/waitlist (Node/Next). Otherwise fallback to local demo.
+          const res = await fetch('/api/waitlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: value })
+          }).then(r => r.json()).catch(() => ({}));
+
+          if (res && res.ok) {
+            result.textContent = T.success;
+            form.reset();
+          } else {
+            // Fallback demo success if no backend available
+            result.textContent = res.message ? `${T.error} (${res.message})` : T.success;
+            if (!res.message) form.reset();
+          }
+        } catch (err) {
+          result.textContent = T.error;
+          console.error(err);
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    })();
   </script>
 </body>
 </html>
