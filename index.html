@@ -8,12 +8,20 @@
   <meta name="description" content="Personalized, printable worksheets for K–8, generated in seconds. Multilingual from day one.">
   <style>
     :root{
-      --ink:#0f172a; --muted:#475569; --edge:#e5e7eb; --card:#ffffff; --bg:#f8fafc; --accent:#2563eb;
+      --ink:#0f172a; --muted:#475569; --edge:#e5e7eb; --card:#ffffff; --bg:#f8fafc; --accent:#2563eb; --brand:#16a34a;
       --ring:0 10px 30px rgba(2,6,23,.08);
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;background:#fff;color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial}
     .container{max-width:1100px;margin:0 auto;padding:28px 20px;position:relative}
+    /* Subtle hero background */
+    .hero-wrap{position:relative;overflow:visible}
+    .hero-wrap:before{
+      content:"";position:absolute;inset:-40px -60px 0 -60px;z-index:-1;
+      background:radial-gradient(1200px 600px at 75% 10%, rgba(22,163,74,0.08), transparent 60%),
+                 radial-gradient(900px 500px at 25% 5%, rgba(37,99,235,0.06), transparent 55%);
+    }
+    /* Language toggle */
     .lang-toggle{
       position:absolute; top:16px; right:20px; display:flex; gap:6px; align-items:center;
       background:#fff; border:1px solid var(--edge); border-radius:999px; padding:6px; box-shadow:var(--ring);
@@ -22,13 +30,20 @@
       border:0; background:transparent; padding:6px 10px; border-radius:999px; cursor:pointer; font-weight:700; color:#0b1220;
     }
     .lang-toggle button[aria-pressed="true"]{ background:var(--accent); color:#fff; }
+    /* Brand badge above headline */
+    .brand-badge{
+      display:inline-flex; align-items:center; gap:8px; font-weight:900; letter-spacing:.06em;
+      text-transform:uppercase; color:#065f46; background:rgba(22,163,74,.12); border:1px solid rgba(22,163,74,.25);
+      padding:6px 10px; border-radius:999px; margin-bottom:10px; font-size:13px;
+    }
+    .brand-dot{width:8px;height:8px;border-radius:999px;background:var(--brand);box-shadow:0 0 0 3px rgba(22,163,74,.25) inset}
+    /* Hero */
     .hero{display:flex; gap:28px; align-items:flex-start; justify-content:space-between; margin-top:8px}
     .hero-copy{flex:1; min-width:0}
-    .hero-art{width:420px; display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:145px;} /* lowered ~145px total */
+    .hero-art{width:420px; display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:145px;} /* aligned right */
     .brandmark{width:280px; height:auto; display:block; filter: drop-shadow(0 12px 28px rgba(2,6,23,.12));}
-    .brand-tagline{font-weight:700; line-height:1.2; color:#0b1220; font-size:18px; text-align:center}
-    .brand-tagline small{display:block; font-weight:600; color:#0b1220; opacity:.9}
-    h1{font-size:48px;line-height:1.05;margin:0 0 18px 0;letter-spacing:-.02em}
+    /* Content blocks */
+    h1{font-size:48px;line-height:1.05;margin:0 0 14px 0;letter-spacing:-.02em}
     p.lead{font-size:20px;color:#0b1220;margin:0 0 16px 0;max-width:680px}
     .announce{
       background:#fff;border:1px solid var(--edge);border-radius:14px;padding:18px 20px;
@@ -59,11 +74,12 @@
       .hero{flex-direction:column-reverse}
       .hero-art{width:100%; margin-top:10px;}
       .brandmark{width:240px}
+      h1{font-size:40px}
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container hero-wrap">
     <div class="lang-toggle" role="group" aria-label="Language">
       <button type="button" data-lang="en" aria-pressed="true">EN</button>
       <button type="button" data-lang="es" aria-pressed="false">ES</button>
@@ -72,6 +88,7 @@
 
     <div class="hero">
       <div class="hero-copy">
+        <div class="brand-badge"><span class="brand-dot"></span> KIDOOZA</div>
         <h1 data-i18n="headline">Smarter Learning<br>Powered by AI</h1>
         <p class="lead" data-i18n="lead">We are currently working hard to bring you an innovative learning experience powered by artificial intelligence. Stay tuned for updates on our progress.</p>
         <div class="announce">
@@ -86,11 +103,8 @@
       </div>
 
       <div class="hero-art">
-      <img class="brandmark" src="./brand-mark.png" alt="KIDOOZA Logo">
-       <div class="brand-tagline">
-          KIDOOZA
-          <small data-i18n="tagline">Smarter Learning Powered by AI</small>
-        </div>
+        <img class="brandmark" src="./brand-mark.png" alt="KIDOOZA Logo">
+        <!-- Removed repeated tagline beneath the logo per request -->
       </div>
     </div>
 
@@ -100,15 +114,79 @@
         <h3 data-i18n="f1_title">Instant Worksheets</h3>
         <p data-i18n="f1_body">Pick a topic, grade, and language. Get printable PDFs with answer keys.</p>
       </article>
+
       <article class="card">
-        <div class="flag-row">
-          <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="US" class="flag-icon">
-          <img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Flag_of_Spain.svg" alt="ES" class="flag-icon">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="VI" class="flag-icon">
+        <div class="flag-row" aria-label="Languages: English, Spanish, Vietnamese">
+          <!-- USA (round SVGs) -->
+          <svg class="flag-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="English (US)">
+            <defs><clipPath id="r"><circle cx="32" cy="32" r="32"/></clipPath></defs>
+            <g clip-path="url(#r)">
+              <rect width="64" height="64" fill="#b22234"/>
+              <g fill="#fff">
+                <rect y="5.33" width="64" height="5.33"/>
+                <rect y="16"  width="64" height="5.33"/>
+                <rect y="26.67" width="64" height="5.33"/>
+                <rect y="37.33" width="64" height="5.33"/>
+                <rect y="48" width="64" height="5.33"/>
+                <rect y="58.67" width="64" height="5.33"/>
+              </g>
+              <rect width="28.8" height="28.8" fill="#3c3b6e"/>
+              <g fill="#fff">
+                <circle cx="3" cy="3" r="1.2"/>
+                <circle cx="6.6" cy="3" r="1.2"/>
+                <circle cx="10.2" cy="3" r="1.2"/>
+                <circle cx="13.8" cy="3" r="1.2"/>
+                <circle cx="17.4" cy="3" r="1.2"/>
+                <circle cx="21" cy="3" r="1.2"/>
+                <circle cx="24.6" cy="3" r="1.2"/>
+                <circle cx="3" cy="6.6" r="1.2"/>
+                <circle cx="6.6" cy="6.6" r="1.2"/>
+                <circle cx="10.2" cy="6.6" r="1.2"/>
+                <circle cx="13.8" cy="6.6" r="1.2"/>
+                <circle cx="17.4" cy="6.6" r="1.2"/>
+                <circle cx="21" cy="6.6" r="1.2"/>
+                <circle cx="24.6" cy="6.6" r="1.2"/>
+                <circle cx="3" cy="10.2" r="1.2"/>
+                <circle cx="6.6" cy="10.2" r="1.2"/>
+                <circle cx="10.2" cy="10.2" r="1.2"/>
+                <circle cx="13.8" cy="10.2" r="1.2"/>
+                <circle cx="17.4" cy="10.2" r="1.2"/>
+                <circle cx="21" cy="10.2" r="1.2"/>
+                <circle cx="24.6" cy="10.2" r="1.2"/>
+                <circle cx="3" cy="13.8" r="1.2"/>
+                <circle cx="6.6" cy="13.8" r="1.2"/>
+                <circle cx="10.2" cy="13.8" r="1.2"/>
+                <circle cx="13.8" cy="13.8" r="1.2"/>
+                <circle cx="17.4" cy="13.8" r="1.2"/>
+                <circle cx="21" cy="13.8" r="1.2"/>
+                <circle cx="24.6" cy="13.8" r="1.2"/>
+              </g>
+            </g>
+          </svg>
+
+          <!-- Spain (round) -->
+          <svg class="flag-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Spanish (Spain)">
+            <defs><clipPath id="r2"><circle cx="32" cy="32" r="32"/></clipPath></defs>
+            <g clip-path="url(#r2)">
+              <rect width="64" height="64" fill="#c60b1e"/>
+              <rect y="16" width="64" height="32" fill="#ffc400"/>
+              <circle cx="18" cy="32" r="5" fill="#c60b1e"/>
+            </g>
+          </svg>
+
+          <!-- Vietnam (round) -->
+          <svg class="flag-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vietnamese (Vietnam)">
+            <defs><clipPath id="r3"><circle cx="32" cy="32" r="32"/></clipPath></defs>
+            <g clip-path="url(#r3)">
+              <rect width="64" height="64" fill="#da251d"/>
+              <polygon points="32,16 36.472,28 49,28 38,35.5 42,48 32,39.5 22,48 26,35.5 15,28 27.528,28" fill="#ffdf00"/>
+            </g>
+          </svg>
         </div>
         <h3 data-i18n="f2_title">Multilingual</h3>
         <p data-i18n="f2_body">English, Spanish, and Vietnamese at launch. More to come.</p>
       </article>
+
       <article class="card">
         <div class="teacher-icon">👩‍🏫</div>
         <h3 data-i18n="f3_title">Teacher Friendly</h3>
@@ -120,6 +198,98 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const I18N = {
+      en: {
+        headline: "Smarter Learning<br>Powered by AI",
+        lead: "We are currently working hard to bring you an innovative learning experience powered by artificial intelligence. Stay tuned for updates on our progress.",
+        uc_title: "Under construction",
+        uc_body: "building the platform to deliver an exceptional educational experience.",
+        cta: "Join Waitlist",
+        privacy: "We respect your privacy. Unsubscribe anytime.",
+        contact: 'Questions? Email <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a>',
+        f1_title: "Instant Worksheets",
+        f1_body: "Pick a topic, grade, and language. Get printable PDFs with answer keys.",
+        f2_title: "Multilingual",
+        f2_body: "English, Spanish, and Vietnamese at launch. More to come.",
+        f3_title: "Teacher Friendly",
+        f3_body: "Personalized, printable worksheets for K–8, generated in seconds. Template gallery, class packs, and PDF downloads that work anywhere."
+      },
+      es: {
+        headline: "Aprendizaje más inteligente<br>impulsado por IA",
+        lead: "Estamos trabajando para ofrecerte una experiencia de aprendizaje innovadora impulsada por inteligencia artificial. Mantente al tanto de las novedades.",
+        uc_title: "En construcción",
+        uc_body: "construyendo la plataforma para ofrecer una experiencia educativa excepcional.",
+        cta: "Unirme a la lista",
+        privacy: "Respetamos tu privacidad. Puedes darte de baja en cualquier momento.",
+        contact: '¿Preguntas? Escribe a <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a>',
+        f1_title: "Hojas de trabajo instantáneas",
+        f1_body: "Elige tema, grado e idioma. Obtén PDFs imprimibles con claves de respuestas.",
+        f2_title: "Multilingüe",
+        f2_body: "Inglés, español y vietnamita al lanzamiento. Más por venir.",
+        f3_title: "Amigable para docentes",
+        f3_body: "Hojas personalizadas e imprimibles para K–8, generadas en segundos. Galería de plantillas, paquetes para clase y descargas en PDF."
+      },
+      vi: {
+        headline: "Học thông minh hơn<br>nhờ Trí tuệ Nhân tạo",
+        lead: "Chúng tôi đang nỗ lực xây dựng một trải nghiệm học tập mới mẻ, vận hành bởi AI. Vui lòng theo dõi các cập nhật sắp tới.",
+        uc_title: "Đang xây dựng",
+        uc_body: "phát triển nền tảng để mang lại trải nghiệm giáo dục xuất sắc.",
+        cta: "Tham gia danh sách chờ",
+        privacy: "Chúng tôi tôn trọng quyền riêng tư của bạn. Có thể hủy đăng ký bất cứ lúc nào.",
+        contact: 'Câu hỏi? Gửi email đến <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a>',
+        f1_title: "Bài tập in ngay",
+        f1_body: "Chọn chủ đề, khối lớp và ngôn ngữ. Nhận PDF có sẵn đáp án.",
+        f2_title: "Đa ngôn ngữ",
+        f2_body: "Ra mắt với tiếng Anh, Tây Ban Nha và Tiếng Việt. Sẽ bổ sung thêm.",
+        f3_title: "Thân thiện với giáo viên",
+        f3_body: "Bài tập cá nhân hóa, có thể in cho K–8, tạo trong vài giây. Thư viện mẫu, gói cho lớp học và tải PDF tiện dụng."
+      }
+    };
+
+    function setLang(lang){
+      const dict = I18N[lang] || I18N.en;
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('data-lang', lang);
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if(dict[key] !== undefined){
+          el.innerHTML = dict[key];
+        }
+      });
+      document.querySelectorAll('.lang-toggle button').forEach(btn => {
+        btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
+      });
+      try{ localStorage.setItem('kidooza_lang', lang); }catch{}
+    }
+
+    const stored = (()=>{ try{return localStorage.getItem('kidooza_lang')}catch{return null} })();
+    setLang(stored || 'en');
+    document.querySelectorAll('.lang-toggle button').forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.dataset.lang));
+    });
+
+    // Waitlist (demo)
+    document.getElementById('waitlist-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      if(!/^\S+@\S+\.\S+$/.test(email)){
+        alert(document.documentElement.getAttribute('data-lang') === 'es' ? 'Por favor escribe un email válido.' :
+              document.documentElement.getAttribute('data-lang') === 'vi' ? 'Vui lòng nhập email hợp lệ.' :
+              'Please enter a valid email address.');
+        return;
+      }
+      try {
+        const key = 'kidooza_waitlist';
+        const list = JSON.parse(localStorage.getItem(key) || '[]');
+        if(!list.includes(email)) list.push(email);
+        localStorage.setItem(key, JSON.stringify(list));
+      } catch{}
+      document.getElementById('email').value='';
+      alert(document.documentElement.getAttribute('data-lang') === 'es' ? '¡Gracias! Te hemos apuntado.' :
+            document.documentElement.getAttribute('data-lang') === 'vi' ? 'Cảm ơn! Bạn đã vào danh sách chờ.' :
+            'Thanks! You are on the waitlist.');
+    });
   </script>
 </body>
 </html>
