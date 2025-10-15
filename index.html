@@ -1,0 +1,125 @@
+
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KIDOOZA — Smarter Learning Powered by AI</title>
+  <meta name="description" content="Personalized, printable worksheets for K–8, generated in seconds. Multilingual from day one.">
+  <style>
+    :root{
+      --ink:#0f172a; --muted:#475569; --edge:#e5e7eb; --card:#ffffff; --bg:#f8fafc; --accent:#2563eb;
+      --ring:0 10px 30px rgba(2,6,23,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:#fff;color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial}
+    .container{max-width:1100px;margin:0 auto;padding:28px 20px;position:relative}
+    .lang-toggle{
+      position:absolute; top:16px; right:20px; display:flex; gap:6px; align-items:center;
+      background:#fff; border:1px solid var(--edge); border-radius:999px; padding:6px; box-shadow:var(--ring);
+    }
+    .lang-toggle button{
+      border:0; background:transparent; padding:6px 10px; border-radius:999px; cursor:pointer; font-weight:700; color:#0b1220;
+    }
+    .lang-toggle button[aria-pressed="true"]{ background:var(--accent); color:#fff; }
+    .hero{display:flex; gap:28px; align-items:flex-start; justify-content:space-between; margin-top:8px}
+    .hero-copy{flex:1; min-width:0}
+    .hero-art{width:420px; display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:145px;} /* lowered ~145px total */
+    .brandmark{width:280px; height:auto; display:block; filter: drop-shadow(0 12px 28px rgba(2,6,23,.12));}
+    .brand-tagline{font-weight:700; line-height:1.2; color:#0b1220; font-size:18px; text-align:center}
+    .brand-tagline small{display:block; font-weight:600; color:#0b1220; opacity:.9}
+    h1{font-size:48px;line-height:1.05;margin:0 0 18px 0;letter-spacing:-.02em}
+    p.lead{font-size:20px;color:#0b1220;margin:0 0 16px 0;max-width:680px}
+    .announce{
+      background:#fff;border:1px solid var(--edge);border-radius:14px;padding:18px 20px;
+      box-shadow:var(--ring);margin:0 0 14px 0;max-width:750px
+    }
+    .announce b{font-weight:800}
+    form.waitlist{display:flex;gap:12px;align-items:center;margin:14px 0 6px 0;flex-wrap:wrap}
+    input[type="email"]{
+      flex:1 1 380px;min-width:260px;border:1px solid var(--edge);padding:14px 14px;border-radius:12px;font-size:16px;outline:none
+    }
+    input[type="email"]:focus{border-color:#9dc1ff;box-shadow:0 0 0 4px rgba(37,99,235,.15)}
+    button.primary{
+      background:var(--accent);color:#fff;border:0;border-radius:12px;padding:14px 20px;font-weight:700;font-size:16px;cursor:pointer
+    }
+    .privacy{font-size:13px;color:#0b1220}
+    .contact{margin-top:14px;color:#0b1220}
+    .contact a{color:#2563eb;text-decoration:none;font-weight:700}
+    .features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:24px 0 10px 0}
+    .card{background:var(--card);border:1px solid var(--edge);border-radius:18px;box-shadow:var(--ring);padding:20px;text-align:center}
+    .card h3{margin:0 0 8px 0;font-size:22px}
+    .card p{margin:0;color:#0b1220}
+    .checkmark{font-size:32px;color:var(--accent);margin-bottom:8px;display:block}
+    .flag-row{display:flex;justify-content:center;gap:10px;margin-bottom:10px}
+    .flag-icon{width:44px;height:44px;display:block}
+    .teacher-icon{font-size:40px;margin-bottom:8px;display:block}
+    footer{padding:30px 0 10px 0;color:#475569;font-size:13px;text-align:center}
+    @media (max-width:1020px){
+      .hero{flex-direction:column-reverse}
+      .hero-art{width:100%; margin-top:10px;}
+      .brandmark{width:240px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="es" aria-pressed="false">ES</button>
+      <button type="button" data-lang="vi" aria-pressed="false">VI</button>
+    </div>
+
+    <div class="hero">
+      <div class="hero-copy">
+        <h1 data-i18n="headline">Smarter Learning<br>Powered by AI</h1>
+        <p class="lead" data-i18n="lead">We are currently working hard to bring you an innovative learning experience powered by artificial intelligence. Stay tuned for updates on our progress.</p>
+        <div class="announce">
+          <span><b data-i18n="uc_title">Under construction</b> &mdash; <span data-i18n="uc_body">building the platform to deliver an exceptional educational experience.</span></span>
+        </div>
+        <form class="waitlist" id="waitlist-form" autocomplete="on" novalidate>
+          <input id="email" type="email" placeholder="you@example.com" aria-label="Email address" required />
+          <button class="primary" type="submit" data-i18n="cta">Join Waitlist</button>
+        </form>
+        <div class="privacy" data-i18n="privacy">We respect your privacy. Unsubscribe anytime.</div>
+        <div class="contact" data-i18n="contact">Questions? Email <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a></div>
+      </div>
+
+      <div class="hero-art">
+        <img class="brandmark" src="" alt="KIDOOZA Logo (add your brand-mark.png here)">
+        <div class="brand-tagline">
+          KIDOOZA
+          <small data-i18n="tagline">Smarter Learning Powered by AI</small>
+        </div>
+      </div>
+    </div>
+
+    <section class="features" aria-label="Key features">
+      <article class="card">
+        <div class="checkmark">✅</div>
+        <h3 data-i18n="f1_title">Instant Worksheets</h3>
+        <p data-i18n="f1_body">Pick a topic, grade, and language. Get printable PDFs with answer keys.</p>
+      </article>
+      <article class="card">
+        <div class="flag-row">
+          <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="US" class="flag-icon">
+          <img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Flag_of_Spain.svg" alt="ES" class="flag-icon">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="VI" class="flag-icon">
+        </div>
+        <h3 data-i18n="f2_title">Multilingual</h3>
+        <p data-i18n="f2_body">English, Spanish, and Vietnamese at launch. More to come.</p>
+      </article>
+      <article class="card">
+        <div class="teacher-icon">👩‍🏫</div>
+        <h3 data-i18n="f3_title">Teacher Friendly</h3>
+        <p data-i18n="f3_body">Personalized, printable worksheets for K–8, generated in seconds. Template gallery, class packs, and PDF downloads that work anywhere.</p>
+      </article>
+    </section>
+    <footer>&copy; <span id="year"></span> KIDOOZA. All rights reserved.</footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
