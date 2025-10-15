@@ -1,0 +1,60 @@
+<form id="waitlist-form" style="max-width:700px">
+  <div style="display:flex;gap:12px">
+    <input id="email" type="email" placeholder="you@example.com" required
+           style="flex:1;padding:14px 16px;border:1px solid #d0d7de;border-radius:10px" />
+    <button id="join-btn" type="submit"
+            style="padding:14px 18px;border-radius:10px;border:0;cursor:pointer">
+      Join Waitlist
+    </button>
+  </div>
+  <div id="result" style="margin-top:10px;font-size:14px"></div>
+</form>
+
+<script>
+(function () {
+  const form   = document.getElementById('waitlist-form');
+  const email  = document.getElementById('email');
+  const btn    = document.getElementById('join-btn');
+  const result = document.getElementById('result');
+
+  if (!form || !email) {
+    console.warn('Waitlist form not found on page.');
+    return;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const value = (email.value || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      result.textContent = 'Please enter a valid email.';
+      return;
+    }
+
+    btn.disabled = true;
+    result.textContent = 'Submitting...';
+
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: value })
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data?.ok) {
+        result.textContent = 'Thanks! You’re on the waitlist.';
+        email.value = '';
+        console.log('WAITLIST_OK', data);
+      } else {
+        result.textContent = data?.message || 'Something went wrong. Please try again.';
+        console.error('WAITLIST_ERR', data);
+      }
+    } catch (err) {
+      result.textContent = 'Network error. Please try again.';
+      console.error('WAITLIST_NET_ERR', err);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
