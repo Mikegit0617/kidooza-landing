@@ -1,26 +1,63 @@
-
 <!doctype html>
 <html lang="en" data-lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>KIDOOZA — Smarter Learning Powered by AI</title>
-  <meta name="description" content="Personalized, printable worksheets for K–8, generated in seconds. Multilingual from day one.">
-  <style>
-    :root{
-      --ink:#0f172a; --muted:#475569; --edge:#e5e7eb; --card:#ffffff; --bg:#f8fafc; --accent:#2563eb; --brand:#16a34a;
-      --ring:0 10px 30px rgba(2,6,23,.08);
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:#fff;color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial}
-    .container{max-width:1100px;margin:0 auto;padding:28px 20px;position:relative}
-    /* Subtle hero background */
-    .hero-wrap{position:relative;overflow:visible}
-    .hero-wrap:before{
-      content:"";position:absolute;inset:-40px -60px 0 -60px;z-index:-1;
-      background:radial-gradient(1200px 600px at 75% 10%, rgba(22,163,74,0.08), transparent 60%),
-                 radial-gradient(900px 500px at 25% 5%, rgba(37,99,235,0.06), transparent 55%);
-    }
+<meta name="description" content="Personalized, printable worksheets for K–8, generated in seconds. Multilingual from day one.">
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.kidooza.ai/">
+<meta property="og:title" content="KIDOOZA — Smarter Learning Powered by AI">
+<meta property="og:description" content="Personalized, printable worksheets for K–8. Multilingual from day one.">
+<meta property="og:image" content="https://www.kidooza.ai/brand-mark.png">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://www.kidooza.ai/">
+<meta name="twitter:title" content="KIDOOZA — Smarter Learning Powered by AI">
+<meta name="twitter:description" content="Personalized, printable worksheets for K–8. Multilingual from day one.">
+<meta name="twitter:image" content="https://www.kidooza.ai/brand-mark.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/brand-mark.png">
+
+<style>
+:root{
+  --ink:#0f172a;
+  --muted:#475569;
+  --edge:#e5e7eb;
+  --card:#ffffff;
+  --bg:#f8fafc;
+  --accent:#2563eb;
+  --brand:#16a34a;
+  --ring:0 10px 30px rgba(2,6,23,.08);
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  background:#fff;
+  color:var(--ink);
+  font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+}
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:28px 20px;
+  position:relative;
+}
+/* Subtle hero background */
+.hero-wrap{position:relative;overflow:visible}
+.hero-wrap:before{
+  content:"";
+  position:absolute;
+  inset:-40px -60px 0 -60px;
+  z-index:-1;
+  background:radial-gradient(1200px 600px at 75% 10%, rgba(22,163,74,0.08), transparent 60%),
+             radial-gradient(900px 500px at 25% 5%, rgba(37,99,235,0.06), transparent 55%);
+}
+
     /* Language toggle */
     .lang-toggle{
       position:absolute; top:16px; right:20px; display:flex; gap:6px; align-items:center;
