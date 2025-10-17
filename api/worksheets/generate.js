@@ -139,4 +139,3 @@ module.exports = async (req, res) => {
     return bad(res, 500, "Server error");
   }
 };
-

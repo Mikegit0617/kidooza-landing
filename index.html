@@ -327,5 +327,65 @@ html,body{
             'Thanks! You are on the waitlist.');
     });
   </script>
-</body>
-</html>
+
+<!-- ========================================================= -->
+<!-- ✨ KIDOOZA Worksheet Generator -->
+<!-- ========================================================= -->
+<section id="worksheet-generator" style="max-width:600px;margin:60px auto;padding:32px;background:#f8fafc;border-radius:16px;box-shadow:0 10px 30px rgba(2,6,23,.05);">
+  <h2 style="text-align:center;color:#0f172a;margin-bottom:16px;">Try the KIDOOZA Worksheet Generator</h2>
+  <p style="text-align:center;color:#475569;margin-bottom:24px;">Generate a printable worksheet instantly powered by AI.</p>
+
+  <form id="pdfForm" style="display:flex;flex-direction:column;gap:12px;">
+    <label style="font-weight:600;">Subject:</label>
+    <input type="text" id="subject" value="Math" placeholder="e.g., Math, Science" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;">
+
+    <label style="font-weight:600;">Grade:</label>
+    <input type="number" id="grade" value="2" min="0" max="12" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;">
+
+    <label style="font-weight:600;">Difficulty:</label>
+    <select id="difficulty" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;">
+      <option>Easy</option>
+      <option>Medium</option>
+      <option>Hard</option>
+    </select>
+
+    <button type="submit" style="margin-top:20px;padding:12px;background:#2563eb;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">
+      Generate PDF
+    </button>
+  </form>
+
+  <p id="status" style="text-align:center;margin-top:16px;color:#64748b;"></p>
+</section>
+
+<script>
+document.getElementById('pdfForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const status = document.getElementById('status');
+  status.textContent = 'Generating worksheet... ⏳';
+
+  const body = {
+    subject: document.getElementById('subject').value,
+    grade: parseInt(document.getElementById('grade').value),
+    difficulty: document.getElementById('difficulty').value,
+    count: 5
+  };
+
+  try {
+    const res = await fetch('/api/worksheets/pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) throw new Error(await res.text());
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+    status.textContent = '✅ Worksheet ready! Opened in new tab.';
+  } catch (err) {
+    console.error(err);
+    status.textContent = '❌ Failed to generate worksheet. Check console for details.';
+  }
+});
+</script>
+<!-- ========================================================= -->
