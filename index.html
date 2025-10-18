@@ -4,58 +4,46 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>KIDOOZA — Smarter Learning Powered by AI</title>
-<meta name="description" content="Personalized, printable worksheets for K–8, generated in seconds. Multilingual from day one.">
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.kidooza.ai/">
-<meta property="og:title" content="KIDOOZA — Smarter Learning Powered by AI">
-<meta property="og:description" content="Personalized, printable worksheets for K–8. Multilingual from day one.">
-<meta property="og:image" content="https://www.kidooza.ai/og-image.png">
-<!-- Twitter / X -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://www.kidooza.ai/">
-<meta name="twitter:title" content="KIDOOZA — Smarter Learning Powered by AI">
-<meta name="twitter:description" content="Personalized, printable worksheets for K–8. Multilingual from day one.">
-<meta name="twitter:image" content="https://www.kidooza.ai/og-image.png">
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="/brand-mark.png">
+  <meta name="description" content="Personalized, printable worksheets for K–8, generated in seconds. Multilingual from day one.">
 
-<style>
-:root{
-  --ink:#0f172a;
-  --muted:#475569;
-  --edge:#e5e7eb;
-  --card:#ffffff;
-  --bg:#f8fafc;
-  --accent:#2563eb;
-  --brand:#16a34a;
-  --ring:0 10px 30px rgba(2,6,23,.08);
-}
-*{box-sizing:border-box}
-html,body{
-  margin:0;
-  padding:0;
-  background:#fff;
-  color:var(--ink);
-  font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-}
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  padding:28px 20px;
-  position:relative;
-}
-/* Subtle hero background */
-.hero-wrap{position:relative;overflow:visible}
-.hero-wrap:before{
-  content:"";
-  position:absolute;
-  inset:-40px -60px 0 -60px;
-  z-index:-1;
-  background:radial-gradient(1200px 600px at 75% 10%, rgba(22,163,74,0.08), transparent 60%),
-             radial-gradient(900px 500px at 25% 5%, rgba(37,99,235,0.06), transparent 55%);
-}
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.kidooza.ai/">
+  <meta property="og:title" content="KIDOOZA — Smarter Learning Powered by AI">
+  <meta property="og:description" content="Personalized, printable worksheets for K–8. Multilingual from day one.">
+  <meta property="og:image" content="https://www.kidooza.ai/og-image.png">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.kidooza.ai/">
+  <meta name="twitter:title" content="KIDOOZA — Smarter Learning Powered by AI">
+  <meta name="twitter:description" content="Personalized, printable worksheets for K–8. Multilingual from day one.">
+  <meta name="twitter:image" content="https://www.kidooza.ai/og-image.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/brand-mark.png">
+
+  <!-- ===== Styles ===== -->
+  <style>
+    :root{
+      --ink:#0f172a; --muted:#475569; --edge:#e5e7eb; --card:#ffffff; --bg:#f8fafc;
+      --accent:#2563eb; --brand:#16a34a; --ring:0 10px 30px rgba(2,6,23,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{
+      margin:0; padding:0; background:#fff; color:var(--ink);
+      font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    }
+    .container{ max-width:1100px; margin:0 auto; padding:28px 20px; position:relative; }
+    /* Subtle hero background */
+    .hero-wrap{position:relative;overflow:visible}
+    .hero-wrap:before{
+      content:""; position:absolute; inset:-40px -60px 0 -60px; z-index:-1;
+      background:
+        radial-gradient(1200px 600px at 75% 10%, rgba(22,163,74,0.08), transparent 60%),
+        radial-gradient(900px 500px at 25% 5%, rgba(37,99,235,0.06), transparent 55%);
+    }
 
     /* Language toggle */
     .lang-toggle{
@@ -66,25 +54,26 @@ html,body{
       border:0; background:transparent; padding:6px 10px; border-radius:999px; cursor:pointer; font-weight:700; color:#0b1220;
     }
     .lang-toggle button[aria-pressed="true"]{ background:var(--accent); color:#fff; }
+
     /* Brand badge above headline */
     .brand-badge{
       display:inline-flex; align-items:center; gap:8px; font-weight:900; letter-spacing:.06em;
-      text-transform:uppercase; color:#065f46; background:rgba(22,163,74,.12); border:1px solid rgba(22,163,74,.25);
-      padding:6px 10px; border-radius:999px; margin-bottom:10px; font-size:13px;
+      text-transform:uppercase; color:#065f46; background:rgba(22,163,74,.12);
+      border:1px solid rgba(22,163,74,.25); padding:6px 10px; border-radius:999px;
+      margin-bottom:10px; font-size:13px;
     }
     .brand-dot{width:8px;height:8px;border-radius:999px;background:var(--brand);box-shadow:0 0 0 3px rgba(22,163,74,.25) inset}
+
     /* Hero */
     .hero{display:flex; gap:28px; align-items:flex-start; justify-content:space-between; margin-top:8px}
     .hero-copy{flex:1; min-width:0}
-    .hero-art{width:420px; display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:145px;} /* aligned right */
+    .hero-art{width:420px; display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:145px;}
     .brandmark{width:280px; height:auto; display:block; filter: drop-shadow(0 12px 28px rgba(2,6,23,.12));}
+
     /* Content blocks */
     h1{font-size:48px;line-height:1.05;margin:0 0 14px 0;letter-spacing:-.02em}
     p.lead{font-size:20px;color:#0b1220;margin:0 0 16px 0;max-width:680px}
-    .announce{
-      background:#fff;border:1px solid var(--edge);border-radius:14px;padding:18px 20px;
-      box-shadow:var(--ring);margin:0 0 14px 0;max-width:750px
-    }
+    .announce{ background:#fff;border:1px solid var(--edge);border-radius:14px;padding:18px 20px; box-shadow:var(--ring);margin:0 0 14px 0;max-width:750px }
     .announce b{font-weight:800}
     form.waitlist{display:flex;gap:12px;align-items:center;margin:14px 0 6px 0;flex-wrap:wrap}
     input[type="email"]{
@@ -97,6 +86,7 @@ html,body{
     .privacy{font-size:13px;color:#0b1220}
     .contact{margin-top:14px;color:#0b1220}
     .contact a{color:#2563eb;text-decoration:none;font-weight:700}
+
     .features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:24px 0 10px 0}
     .card{background:var(--card);border:1px solid var(--edge);border-radius:18px;box-shadow:var(--ring);padding:20px;text-align:center}
     .card h3{margin:0 0 8px 0;font-size:22px}
@@ -106,14 +96,26 @@ html,body{
     .flag-icon{width:44px;height:44px;display:block}
     .teacher-icon{font-size:40px;margin-bottom:8px;display:block}
     footer{padding:30px 0 10px 0;color:#475569;font-size:13px;text-align:center}
+
     @media (max-width:1020px){
       .hero{flex-direction:column-reverse}
       .hero-art{width:100%; margin-top:10px;}
       .brandmark{width:240px}
       h1{font-size:40px}
     }
+
+    /* Form spinner/disabled */
+    #pdfForm button[disabled] { opacity:.65; cursor:not-allowed; }
+    .spinner{
+      display:inline-block; width:16px; height:16px;
+      border:2px solid currentColor; border-right-color:transparent;
+      border-radius:50%; animation:spin .7s linear infinite;
+      vertical-align:-2px; margin-right:8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
+
 <body>
   <div class="container hero-wrap">
     <div class="lang-toggle" role="group" aria-label="Language">
@@ -130,17 +132,18 @@ html,body{
         <div class="announce">
           <span><b data-i18n="uc_title">Under construction</b> &mdash; <span data-i18n="uc_body">building the platform to deliver an exceptional educational experience.</span></span>
         </div>
+
         <form class="waitlist" id="waitlist-form" autocomplete="on" novalidate>
           <input id="email" type="email" placeholder="you@example.com" aria-label="Email address" required />
           <button class="primary" type="submit" data-i18n="cta">Join Waitlist</button>
         </form>
+
         <div class="privacy" data-i18n="privacy">We respect your privacy. Unsubscribe anytime.</div>
         <div class="contact" data-i18n="contact">Questions? Email <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a></div>
       </div>
 
       <div class="hero-art">
-        <img class="brandmark" src="./brand-mark.png" alt="KIDOOZA Logo">
-        <!-- Removed repeated tagline beneath the logo per request -->
+        <img class="brandmark" src="/brand-mark.png" alt="KIDOOZA Logo">
       </div>
     </div>
 
@@ -153,7 +156,7 @@ html,body{
 
       <article class="card">
         <div class="flag-row" aria-label="Languages: English, Spanish, Vietnamese">
-          <!-- USA (round SVGs) -->
+          <!-- USA -->
           <svg class="flag-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="English (US)">
             <defs><clipPath id="r"><circle cx="32" cy="32" r="32"/></clipPath></defs>
             <g clip-path="url(#r)">
@@ -168,39 +171,19 @@ html,body{
               </g>
               <rect width="28.8" height="28.8" fill="#3c3b6e"/>
               <g fill="#fff">
-                <circle cx="3" cy="3" r="1.2"/>
-                <circle cx="6.6" cy="3" r="1.2"/>
-                <circle cx="10.2" cy="3" r="1.2"/>
-                <circle cx="13.8" cy="3" r="1.2"/>
-                <circle cx="17.4" cy="3" r="1.2"/>
-                <circle cx="21" cy="3" r="1.2"/>
-                <circle cx="24.6" cy="3" r="1.2"/>
-                <circle cx="3" cy="6.6" r="1.2"/>
-                <circle cx="6.6" cy="6.6" r="1.2"/>
-                <circle cx="10.2" cy="6.6" r="1.2"/>
-                <circle cx="13.8" cy="6.6" r="1.2"/>
-                <circle cx="17.4" cy="6.6" r="1.2"/>
-                <circle cx="21" cy="6.6" r="1.2"/>
-                <circle cx="24.6" cy="6.6" r="1.2"/>
-                <circle cx="3" cy="10.2" r="1.2"/>
-                <circle cx="6.6" cy="10.2" r="1.2"/>
-                <circle cx="10.2" cy="10.2" r="1.2"/>
-                <circle cx="13.8" cy="10.2" r="1.2"/>
-                <circle cx="17.4" cy="10.2" r="1.2"/>
-                <circle cx="21" cy="10.2" r="1.2"/>
-                <circle cx="24.6" cy="10.2" r="1.2"/>
-                <circle cx="3" cy="13.8" r="1.2"/>
-                <circle cx="6.6" cy="13.8" r="1.2"/>
-                <circle cx="10.2" cy="13.8" r="1.2"/>
-                <circle cx="13.8" cy="13.8" r="1.2"/>
-                <circle cx="17.4" cy="13.8" r="1.2"/>
-                <circle cx="21" cy="13.8" r="1.2"/>
-                <circle cx="24.6" cy="13.8" r="1.2"/>
+                <circle cx="3" cy="3" r="1.2"/><circle cx="6.6" cy="3" r="1.2"/><circle cx="10.2" cy="3" r="1.2"/>
+                <circle cx="13.8" cy="3" r="1.2"/><circle cx="17.4" cy="3" r="1.2"/><circle cx="21" cy="3" r="1.2"/><circle cx="24.6" cy="3" r="1.2"/>
+                <circle cx="3" cy="6.6" r="1.2"/><circle cx="6.6" cy="6.6" r="1.2"/><circle cx="10.2" cy="6.6" r="1.2"/>
+                <circle cx="13.8" cy="6.6" r="1.2"/><circle cx="17.4" cy="6.6" r="1.2"/><circle cx="21" cy="6.6" r="1.2"/><circle cx="24.6" cy="6.6" r="1.2"/>
+                <circle cx="3" cy="10.2" r="1.2"/><circle cx="6.6" cy="10.2" r="1.2"/><circle cx="10.2" cy="10.2" r="1.2"/>
+                <circle cx="13.8" cy="10.2" r="1.2"/><circle cx="17.4" cy="10.2" r="1.2"/><circle cx="21" cy="10.2" r="1.2"/><circle cx="24.6" cy="10.2" r="1.2"/>
+                <circle cx="3" cy="13.8" r="1.2"/><circle cx="6.6" cy="13.8" r="1.2"/><circle cx="10.2" cy="13.8" r="1.2"/>
+                <circle cx="13.8" cy="13.8" r="1.2"/><circle cx="17.4" cy="13.8" r="1.2"/><circle cx="21" cy="13.8" r="1.2"/><circle cx="24.6" cy="13.8" r="1.2"/>
               </g>
             </g>
           </svg>
 
-          <!-- Spain (round) -->
+          <!-- Spain -->
           <svg class="flag-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Spanish (Spain)">
             <defs><clipPath id="r2"><circle cx="32" cy="32" r="32"/></clipPath></defs>
             <g clip-path="url(#r2)">
@@ -210,7 +193,7 @@ html,body{
             </g>
           </svg>
 
-          <!-- Vietnam (round) -->
+          <!-- Vietnam -->
           <svg class="flag-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vietnamese (Vietnam)">
             <defs><clipPath id="r3"><circle cx="32" cy="32" r="32"/></clipPath></defs>
             <g clip-path="url(#r3)">
@@ -229,58 +212,18 @@ html,body{
         <p data-i18n="f3_body">Personalized, printable worksheets for K–8, generated in seconds. Template gallery, class packs, and PDF downloads that work anywhere.</p>
       </article>
     </section>
+
     <footer>&copy; <span id="year"></span> KIDOOZA. All rights reserved.</footer>
   </div>
 
+  <!-- ===== i18n + waitlist ===== -->
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
     const I18N = {
-      en: {
-        headline: "Smarter Learning<br>Powered by AI",
-        lead: "We are currently working hard to bring you an innovative learning experience powered by artificial intelligence. Stay tuned for updates on our progress.",
-        uc_title: "Under construction",
-        uc_body: "building the platform to deliver an exceptional educational experience.",
-        cta: "Join Waitlist",
-        privacy: "We respect your privacy. Unsubscribe anytime.",
-        contact: 'Questions? Email <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a>',
-        f1_title: "Instant Worksheets",
-        f1_body: "Pick a topic, grade, and language. Get printable PDFs with answer keys.",
-        f2_title: "Multilingual",
-        f2_body: "English, Spanish, and Vietnamese at launch. More to come.",
-        f3_title: "Teacher Friendly",
-        f3_body: "Personalized, printable worksheets for K–8, generated in seconds. Template gallery, class packs, and PDF downloads that work anywhere."
-      },
-      es: {
-        headline: "Aprendizaje más inteligente<br>impulsado por IA",
-        lead: "Estamos trabajando para ofrecerte una experiencia de aprendizaje innovadora impulsada por inteligencia artificial. Mantente al tanto de las novedades.",
-        uc_title: "En construcción",
-        uc_body: "construyendo la plataforma para ofrecer una experiencia educativa excepcional.",
-        cta: "Unirme a la lista",
-        privacy: "Respetamos tu privacidad. Puedes darte de baja en cualquier momento.",
-        contact: '¿Preguntas? Escribe a <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a>',
-        f1_title: "Hojas de trabajo instantáneas",
-        f1_body: "Elige tema, grado e idioma. Obtén PDFs imprimibles con claves de respuestas.",
-        f2_title: "Multilingüe",
-        f2_body: "Inglés, español y vietnamita al lanzamiento. Más por venir.",
-        f3_title: "Amigable para docentes",
-        f3_body: "Hojas personalizadas e imprimibles para K–8, generadas en segundos. Galería de plantillas, paquetes para clase y descargas en PDF."
-      },
-      vi: {
-        headline: "Học thông minh hơn<br>nhờ Trí tuệ Nhân tạo",
-        lead: "Chúng tôi đang nỗ lực xây dựng một trải nghiệm học tập mới mẻ, vận hành bởi AI. Vui lòng theo dõi các cập nhật sắp tới.",
-        uc_title: "Đang xây dựng",
-        uc_body: "phát triển nền tảng để mang lại trải nghiệm giáo dục xuất sắc.",
-        cta: "Tham gia danh sách chờ",
-        privacy: "Chúng tôi tôn trọng quyền riêng tư của bạn. Có thể hủy đăng ký bất cứ lúc nào.",
-        contact: 'Câu hỏi? Gửi email đến <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a>',
-        f1_title: "Bài tập in ngay",
-        f1_body: "Chọn chủ đề, khối lớp và ngôn ngữ. Nhận PDF có sẵn đáp án.",
-        f2_title: "Đa ngôn ngữ",
-        f2_body: "Ra mắt với tiếng Anh, Tây Ban Nha và Tiếng Việt. Sẽ bổ sung thêm.",
-        f3_title: "Thân thiện với giáo viên",
-        f3_body: "Bài tập cá nhân hóa, có thể in cho K–8, tạo trong vài giây. Thư viện mẫu, gói cho lớp học và tải PDF tiện dụng."
-      }
+      en: { headline:"Smarter Learning<br>Powered by AI", lead:"We are currently working hard to bring you an innovative learning experience powered by artificial intelligence. Stay tuned for updates on our progress.", uc_title:"Under construction", uc_body:"building the platform to deliver an exceptional educational experience.", cta:"Join Waitlist", privacy:"We respect your privacy. Unsubscribe anytime.", contact:'Questions? Email <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a>', f1_title:"Instant Worksheets", f1_body:"Pick a topic, grade, and language. Get printable PDFs with answer keys.", f2_title:"Multilingual", f2_body:"English, Spanish, and Vietnamese at launch. More to come.", f3_title:"Teacher Friendly", f3_body:"Personalized, printable worksheets for K–8, generated in seconds. Template gallery, class packs, and PDF downloads that work anywhere." },
+      es: { headline:"Aprendizaje más inteligente<br>impulsado por IA", lead:"Estamos trabajando para ofrecerte una experiencia de aprendizaje innovadora impulsada por inteligencia artificial. Mantente al tanto de las novedades.", uc_title:"En construcción", uc_body:"construyendo la plataforma para ofrecer una experiencia educativa excepcional.", cta:"Unirme a la lista", privacy:"Respetamos tu privacidad. Puedes darte de baja en cualquier momento.", contact:'¿Preguntas? Escribe a <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a>', f1_title:"Hojas de trabajo instantáneas", f1_body:"Elige tema, grado e idioma. Obtén PDFs imprimibles con claves de respuestas.", f2_title:"Multilingüe", f2_body:"Inglés, español y vietnamita al lanzamiento. Más por venir.", f3_title:"Amigable para docentes", f3_body:"Hojas personalizadas e imprimibles para K–8, generadas en segundos. Galería de plantillas, paquetes para clase y descargas en PDF." },
+      vi: { headline:"Học thông minh hơn<br>nhờ Trí tuệ Nhân tạo", lead:"Chúng tôi đang nỗ lực xây dựng một trải nghiệm học tập mới mẻ, vận hành bởi AI. Vui lòng theo dõi các cập nhật sắp tới.", uc_title:"Đang xây dựng", uc_body:"phát triển nền tảng để mang lại trải nghiệm giáo dục xuất sắc.", cta:"Tham gia danh sách chờ", privacy:"Chúng tôi tôn trọng quyền riêng tư của bạn. Có thể hủy đăng ký bất cứ lúc nào.", contact:'Câu hỏi? Gửi email đến <a href="mailto:hello@kidooza.ai">hello@kidooza.ai</a>', f1_title:"Bài tập in ngay", f1_body:"Chọn chủ đề, khối lớp và ngôn ngữ. Nhận PDF có sẵn đáp án.", f2_title:"Đa ngôn ngữ", f2_body:"Ra mắt với tiếng Anh, Tây Ban Nha và Tiếng Việt. Sẽ bổ sung thêm.", f3_title:"Thân thiện với giáo viên", f3_body:"Bài tập cá nhân hóa, có thể in cho K–8, tạo trong vài giây. Thư viện mẫu, gói cho lớp học và tải PDF tiện dụng." }
     };
 
     function setLang(lang){
@@ -289,14 +232,12 @@ html,body{
       document.documentElement.setAttribute('data-lang', lang);
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if(dict[key] !== undefined){
-          el.innerHTML = dict[key];
-        }
+        if (dict[key] !== undefined) el.innerHTML = dict[key];
       });
       document.querySelectorAll('.lang-toggle button').forEach(btn => {
         btn.setAttribute('aria-pressed', btn.dataset.lang === lang ? 'true' : 'false');
       });
-      try{ localStorage.setItem('kidooza_lang', lang); }catch{}
+      try { localStorage.setItem('kidooza_lang', lang); } catch {}
     }
 
     const stored = (()=>{ try{return localStorage.getItem('kidooza_lang')}catch{return null} })();
@@ -320,7 +261,7 @@ html,body{
         const list = JSON.parse(localStorage.getItem(key) || '[]');
         if(!list.includes(email)) list.push(email);
         localStorage.setItem(key, JSON.stringify(list));
-      } catch{}
+      } catch {}
       document.getElementById('email').value='';
       alert(document.documentElement.getAttribute('data-lang') === 'es' ? '¡Gracias! Te hemos apuntado.' :
             document.documentElement.getAttribute('data-lang') === 'vi' ? 'Cảm ơn! Bạn đã vào danh sách chờ.' :
@@ -328,64 +269,112 @@ html,body{
     });
   </script>
 
-<!-- ========================================================= -->
-<!-- ✨ KIDOOZA Worksheet Generator -->
-<!-- ========================================================= -->
-<section id="worksheet-generator" style="max-width:600px;margin:60px auto;padding:32px;background:#f8fafc;border-radius:16px;box-shadow:0 10px 30px rgba(2,6,23,.05);">
-  <h2 style="text-align:center;color:#0f172a;margin-bottom:16px;">Try the KIDOOZA Worksheet Generator</h2>
-  <p style="text-align:center;color:#475569;margin-bottom:24px;">Generate a printable worksheet instantly powered by AI.</p>
+  <!-- ========================================================= -->
+  <!-- ✨ KIDOOZA Worksheet Generator -->
+  <!-- ========================================================= -->
+  <section id="worksheet-generator" style="max-width:600px;margin:60px auto;padding:32px;background:#f8fafc;border-radius:16px;box-shadow:0 10px 30px rgba(2,6,23,.05);">
+    <h2 style="text-align:center;color:#0f172a;margin-bottom:16px;">Try the KIDOOZA Worksheet Generator</h2>
+    <p style="text-align:center;color:#475569;margin-bottom:24px;">Generate a printable worksheet instantly powered by AI.</p>
 
-  <form id="pdfForm" style="display:flex;flex-direction:column;gap:12px;">
-    <label style="font-weight:600;">Subject:</label>
-    <input type="text" id="subject" value="Math" placeholder="e.g., Math, Science" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;">
+    <form id="pdfForm" style="display:flex;flex-direction:column;gap:12px;">
+      <label style="font-weight:600;">Subject:</label>
+      <input type="text" id="subject" value="Math" placeholder="e.g., Math, Science" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;">
 
-    <label style="font-weight:600;">Grade:</label>
-    <input type="number" id="grade" value="2" min="0" max="12" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;">
+      <label style="font-weight:600;">Grade:</label>
+      <input type="number" id="grade" value="2" min="0" max="12" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;">
 
-    <label style="font-weight:600;">Difficulty:</label>
-    <select id="difficulty" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;">
-      <option>Easy</option>
-      <option>Medium</option>
-      <option>Hard</option>
-    </select>
+      <label style="font-weight:600;">Difficulty:</label>
+      <select id="difficulty" style="padding:8px;border:1px solid #cbd5e1;border-radius:8px;">
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+      </select>
 
-    <button type="submit" style="margin-top:20px;padding:12px;background:#2563eb;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">
-      Generate PDF
-    </button>
-  </form>
+      <button type="submit" style="margin-top:20px;padding:12px;background:#2563eb;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">
+        <span class="btn-label">Generate PDF</span>
+      </button>
+    </form>
 
-  <p id="status" style="text-align:center;margin-top:16px;color:#64748b;"></p>
-</section>
+    <p id="status" style="text-align:center;margin-top:16px;color:#64748b;"></p>
+  </section>
 
-<script>
-document.getElementById('pdfForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const status = document.getElementById('status');
-  status.textContent = 'Generating worksheet... ⏳';
+  <script>
+    // Generator flow: POST -> generate (AI) -> POST -> pdf -> open
+    document.getElementById('pdfForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-  const body = {
-    subject: document.getElementById('subject').value,
-    grade: parseInt(document.getElementById('grade').value),
-    difficulty: document.getElementById('difficulty').value,
-    count: 5
-  };
+      const status = document.getElementById('status');
+      const btn = e.target.querySelector('button');
+      const label = btn.querySelector('.btn-label');
 
-  try {
-    const res = await fetch('/api/worksheets/pdf', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      const setBusy = (v) => {
+        if (v) {
+          btn.disabled = true;
+          label.innerHTML = '<span class="spinner"></span>Generating...';
+        } else {
+          btn.disabled = false;
+          label.textContent = 'Generate PDF';
+        }
+      };
+
+      status.textContent = '⏳ Generating worksheet... please wait.';
+      setBusy(true);
+
+      const subject = document.getElementById('subject').value.trim();
+      const grade = parseInt(document.getElementById('grade').value, 10);
+      const difficulty = document.getElementById('difficulty').value;
+
+      try {
+        // 1) Ask AI for questions
+        const genRes = await fetch('/api/worksheets/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subject, grade, difficulty, count: 5 })
+        });
+        if (!genRes.ok) {
+          const t = await genRes.text().catch(()=> '');
+          throw new Error(`Generation failed (${genRes.status}): ${t || genRes.statusText}`);
+        }
+        const genData = await genRes.json();
+        if (!genData.ok) throw new Error(genData.message || 'AI generation failed');
+
+        // 2) Build PDF using AI result
+        const pdfRes = await fetch('/api/worksheets/pdf', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            subject,
+            grade,
+            difficulty,
+            title: genData.title,
+            items: genData.items,
+            answers: genData.answers || [],
+            heroImageUrl: '/img/math.png' // looks nice in corner; optional
+          })
+        });
+        if (!pdfRes.ok) {
+          const t = await pdfRes.text().catch(()=> '');
+          throw new Error(`PDF failed (${pdfRes.status}): ${t || pdfRes.statusText}`);
+        }
+
+        // 3) Stream result to browser
+        const blob = await pdfRes.blob();
+        const url = URL.createObjectURL(blob);
+        const w = window.open(url, '_blank');
+        if (!w) {
+          const a = document.createElement('a');
+          a.href = url; a.download = 'worksheet.pdf';
+          document.body.appendChild(a); a.click(); a.remove();
+        }
+        status.textContent = '✅ Worksheet ready! Opened in new tab.';
+      } catch (err) {
+        console.error(err);
+        status.textContent = '❌ Failed to generate worksheet.';
+        alert(err.message || 'Failed to generate worksheet.');
+      } finally {
+        setBusy(false);
+      }
     });
-
-    if (!res.ok) throw new Error(await res.text());
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
-    status.textContent = '✅ Worksheet ready! Opened in new tab.';
-  } catch (err) {
-    console.error(err);
-    status.textContent = '❌ Failed to generate worksheet. Check console for details.';
-  }
-});
-</script>
-<!-- ========================================================= -->
+  </script>
+</body>
+</html>
