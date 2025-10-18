@@ -12,4 +12,3 @@
     { "source": "/img/:path*", "destination": "/public/img/:path*" }
   ]
 }
-
