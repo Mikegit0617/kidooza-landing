@@ -1,4 +1,7 @@
 {
+  "functions": {
+    "api/**/*.js": { "runtime": "nodejs20.x" }
+  },
   "routes": [
     { "src": "^/img/(.*)$", "dest": "/public/img/$1" }
   ]
