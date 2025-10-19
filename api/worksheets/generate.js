@@ -68,13 +68,11 @@ module.exports = async (req, res) => {
     }
 
     return res.status(200).json({
-      ok: true,
-      title,
-      items,
-      meta: { subject, grade, difficulty, count: n },
-    });
-  } catch (err) {
-    console.error('GEN_ERROR', err);
-    return res.status(500).json({ ok: false, message: 'Server error' });
-  }
-};
+  ok: true,
+  title,
+  items,
+  answers: [],
+  meta: { subject, grade, difficulty, count: n },
+  worksheet: { title, items, answers: [] }
+});
+

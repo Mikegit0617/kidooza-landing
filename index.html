@@ -299,82 +299,87 @@
   </section>
 
   <script>
-    // Generator flow: POST -> generate (AI) -> POST -> pdf -> open
-    document.getElementById('pdfForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+  // Generator flow: POST -> /api/worksheets/generate -> POST -> /api/worksheets/pdf
+  document.getElementById('pdfForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      const status = document.getElementById('status');
-      const btn = e.target.querySelector('button');
-      const label = btn.querySelector('.btn-label');
+    const status = document.getElementById('status');
+    const btn = e.target.querySelector('button');
+    const label = btn.querySelector('.btn-label') || btn;
 
-      const setBusy = (v) => {
-        if (v) {
-          btn.disabled = true;
-          label.innerHTML = '<span class="spinner"></span>Generating...';
-        } else {
-          btn.disabled = false;
-          label.textContent = 'Generate PDF';
-        }
-      };
-
-      status.textContent = '⏳ Generating worksheet... please wait.';
-      setBusy(true);
-
-      const subject = document.getElementById('subject').value.trim();
-      const grade = parseInt(document.getElementById('grade').value, 10);
-      const difficulty = document.getElementById('difficulty').value;
-
-      try {
-        // 1) Ask AI for questions
-        const genRes = await fetch('/api/worksheets/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ subject, grade, difficulty, count: 5 })
-        });
-        if (!genRes.ok) {
-          const t = await genRes.text().catch(()=> '');
-          throw new Error(`Generation failed (${genRes.status}): ${t || genRes.statusText}`);
-        }
-        const genData = await genRes.json();
-        if (!genData.ok) throw new Error(genData.message || 'AI generation failed');
-
-        // 2) Build PDF using AI result
-        const pdfRes = await fetch('/api/worksheets/pdf', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            subject,
-            grade,
-            difficulty,
-            title: genData.title,
-            items: genData.items,
-            answers: genData.answers || [],
-            heroImageUrl: '/img/math.png' // looks nice in corner; optional
-          })
-        });
-        if (!pdfRes.ok) {
-          const t = await pdfRes.text().catch(()=> '');
-          throw new Error(`PDF failed (${pdfRes.status}): ${t || pdfRes.statusText}`);
-        }
-
-        // 3) Stream result to browser
-        const blob = await pdfRes.blob();
-        const url = URL.createObjectURL(blob);
-        const w = window.open(url, '_blank');
-        if (!w) {
-          const a = document.createElement('a');
-          a.href = url; a.download = 'worksheet.pdf';
-          document.body.appendChild(a); a.click(); a.remove();
-        }
-        status.textContent = '✅ Worksheet ready! Opened in new tab.';
-      } catch (err) {
-        console.error(err);
-        status.textContent = '❌ Failed to generate worksheet.';
-        alert(err.message || 'Failed to generate worksheet.');
-      } finally {
-        setBusy(false);
+    const setBusy = (v) => {
+      if (v) {
+        btn.disabled = true;
+        if (label) label.textContent = 'Generating...';
+      } else {
+        btn.disabled = false;
+        if (label) label.textContent = 'Generate PDF';
       }
-    });
-  </script>
-</body>
-</html>
+    };
+
+    status.textContent = '⏳ Generating worksheet... please wait.';
+    setBusy(true);
+
+    const subject    = document.getElementById('subject').value.trim();
+    const grade      = parseInt(document.getElementById('grade').value, 10);
+    const difficulty = document.getElementById('difficulty').value;
+
+    try {
+      // 1) Ask AI (or fallback) for questions
+      const genRes = await fetch('/api/worksheets/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subject, grade, difficulty, count: 5 })
+      });
+      if (!genRes.ok) {
+        const t = await genRes.text().catch(() => '');
+        throw new Error(`Generation failed (${genRes.status}): ${t || genRes.statusText}`);
+      }
+
+      const genData = await genRes.json();
+      if (!genData.ok) throw new Error(genData.message || 'AI generation failed');
+
+      // Accept either {title,items,answers} or {worksheet:{title,items,answers}}
+      const ws = genData.worksheet || genData;
+      const title   = ws.title || 'Worksheet';
+      const items   = Array.isArray(ws.items) ? ws.items : [];
+      const answers = Array.isArray(ws.answers) ? ws.answers : [];
+
+      // 2) Build PDF using the AI result
+      const pdfRes = await fetch('/api/worksheets/pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          subject,
+          grade,
+          difficulty,
+          title,
+          items,
+          answers,
+          heroImageUrl: '/img/math.png' // optional icon in the corner
+        })
+      });
+      if (!pdfRes.ok) {
+        const t = await pdfRes.text().catch(() => '');
+        throw new Error(`PDF failed (${pdfRes.status}): ${t || pdfRes.statusText}`);
+      }
+
+      // 3) Stream result to browser
+      const blob = await pdfRes.blob();
+      const url  = URL.createObjectURL(blob);
+      const w    = window.open(url, '_blank');
+      if (!w) {
+        const a = document.createElement('a');
+        a.href = url; a.download = 'worksheet.pdf';
+        document.body.appendChild(a); a.click(); a.remove();
+      }
+      status.textContent = '✅ Worksheet ready! Opened in new tab.';
+    } catch (err) {
+      console.error(err);
+      status.textContent = '❌ Failed to generate worksheet.';
+      alert(err.message || 'Failed to generate worksheet.');
+    } finally {
+      setBusy(false);
+    }
+  });
+</script>
