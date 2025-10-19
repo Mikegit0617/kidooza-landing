@@ -2,7 +2,7 @@
   "name": "kidooza-landing",
   "version": "1.0.0",
   "scripts": {
-    "dev": "npx serve public -l 2002"
+   "dev": "npx serve . -l 2002"
   },
   "dependencies": {
     "pdfkit": "^0.15.0"
